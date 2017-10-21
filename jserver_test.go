@@ -1,7 +1,6 @@
 package jserver
 
 import (
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -40,7 +39,6 @@ func TestPath(t *testing.T) {
 		return
 	}
 
-	fmt.Println(string(body))
 	if string(body) != `[{"age":14,"id":1,"name":"kaban"},{"age":15,"id":2,"name":"serval"}]` {
 		t.Error("response body invalid")
 		return
