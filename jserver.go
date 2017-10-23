@@ -26,6 +26,10 @@ func (r *JsonRouter) Add(path string, file string, x interface{}) error {
 	return nil
 }
 
+func (r *JsonRouter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	r.Router.ServeHTTP(w, req)
+}
+
 func NewJsonRouter() *JsonRouter {
 	router := &JsonRouter{}
 	router.Router = mux.NewRouter()

@@ -24,7 +24,7 @@ func TestPath(t *testing.T) {
 	jsonRouter := NewJsonRouter()
 	jsonRouter.Add("/test", "./test.json", s)
 
-	ts := httptest.NewServer(jsonRouter.Router)
+	ts := httptest.NewServer(jsonRouter)
 	defer ts.Close()
 
 	res, err := http.Get(ts.URL + "/test")
