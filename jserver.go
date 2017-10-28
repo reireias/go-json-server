@@ -14,31 +14,39 @@ type JsonRouter struct {
 	Router *mux.Router
 }
 
-func (r *JsonRouter) Add(path string, file string, x interface{}) error {
+func (r *JsonRouter) Add(path string, file string) error {
+	var data interface{}
 	raw, err := ioutil.ReadFile(file)
 	if err != nil {
 		return err
 	}
-	json.Unmarshal(raw, &x)
+	json.Unmarshal(raw, &data)
+	dataMap := map[string]interface{}{}
+	for _, v := range data.([]interface{}) {
+		id, _ := dproxy.New(v).M("id").String()
+		dataMap[id] = v
+	}
+
+	// /path
 	r.Router.HandleFunc(path, func(w http.ResponseWriter, r *http.Request) {
-		buff, _ := json.Marshal(x)
+		buff, _ := json.Marshal(data)
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprintf(w, string(buff))
 	})
+
+	// /path/{id}
 	r.Router.HandleFunc(path+"/{id}", func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		targetID := vars["id"]
 		w.WriteHeader(http.StatusOK)
-		for _, v := range x.([]interface{}) {
-			id, _ := dproxy.New(v).M("id").String()
-			if targetID == id {
-				buff, _ := json.Marshal(v)
-				fmt.Fprintf(w, string(buff))
-				return
-			}
+		targetData, ok := dataMap[targetID]
+		if ok {
+			buff, _ := json.Marshal(targetData)
+			fmt.Fprintf(w, string(buff))
+		} else {
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprint(w, "{\"error\":\"Not Found.\"}")
 		}
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprint(w, "{\"error\":\"Not Found.\"}")
 	})
 	return nil
 }

@@ -8,15 +8,8 @@ import (
 )
 
 func TestPath(t *testing.T) {
-	type Sample struct {
-		ID   string `json:"id"`
-		Age  int    `json:"age"`
-		Name string `json:"name"`
-	}
-
-	var s []Sample
 	jsonRouter := NewJsonRouter()
-	jsonRouter.Add("/test", "./test.json", s)
+	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
 	defer ts.Close()
@@ -40,15 +33,8 @@ func TestPath(t *testing.T) {
 }
 
 func TestID(t *testing.T) {
-	type Sample struct {
-		ID   string `json:"id"`
-		Age  int    `json:"age"`
-		Name string `json:"name"`
-	}
-
-	var s []Sample
 	jsonRouter := NewJsonRouter()
-	jsonRouter.Add("/test", "./test.json", s)
+	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
 	defer ts.Close()
