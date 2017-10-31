@@ -57,6 +57,31 @@ func TestIDPath(t *testing.T) {
 	}
 }
 
+func TestIDPathNotFound(t *testing.T) {
+	jsonRouter := NewJsonRouter()
+	jsonRouter.Add("/test", "./test.json")
+
+	ts := httptest.NewServer(jsonRouter)
+	defer ts.Close()
+
+	res, err := http.Get(ts.URL + "/test/9999")
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	if string(body) != `{"error":"Not Found."}` {
+		t.Error("response body invalid")
+		return
+	}
+}
+
 func TestFilterString(t *testing.T) {
 	jsonRouter := NewJsonRouter()
 	jsonRouter.Add("/test", "./test.json")
@@ -82,6 +107,31 @@ func TestFilterString(t *testing.T) {
 	}
 }
 
+func TestFilterStringNoRecord(t *testing.T) {
+	jsonRouter := NewJsonRouter()
+	jsonRouter.Add("/test", "./test.json")
+
+	ts := httptest.NewServer(jsonRouter)
+	defer ts.Close()
+
+	res, err := http.Get(ts.URL + "/test?name=invalid")
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	if string(body) != `[]` {
+		t.Error("response body invalid")
+		return
+	}
+}
+
 func TestFilterNumber(t *testing.T) {
 	jsonRouter := NewJsonRouter()
 	jsonRouter.Add("/test", "./test.json")
@@ -102,6 +152,31 @@ func TestFilterNumber(t *testing.T) {
 	}
 
 	if string(body) != `[{"age":14,"id":"1","name":"kaban"}]` {
+		t.Error("response body invalid")
+		return
+	}
+}
+
+func TestFilterNumberInvalid(t *testing.T) {
+	jsonRouter := NewJsonRouter()
+	jsonRouter.Add("/test", "./test.json")
+
+	ts := httptest.NewServer(jsonRouter)
+	defer ts.Close()
+
+	res, err := http.Get(ts.URL + "/test?age=invalid")
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		t.Error("unexpected")
+		return
+	}
+
+	if string(body) != `[]` {
 		t.Error("response body invalid")
 		return
 	}
