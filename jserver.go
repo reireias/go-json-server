@@ -11,11 +11,13 @@ import (
 	"github.com/koron/go-dproxy"
 )
 
-type JsonRouter struct {
+// JSONRouter is router for JSON files.
+type JSONRouter struct {
 	Router *mux.Router
 }
 
-func (r *JsonRouter) Add(path string, file string) error {
+// Add path that returns data from JSON file. Retruns an error.
+func (r *JSONRouter) Add(path string, file string) error {
 	var data interface{}
 	raw, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -78,7 +80,7 @@ func (r *JsonRouter) Add(path string, file string) error {
 	return nil
 }
 
-func (r *JsonRouter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+func (r *JSONRouter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	r.Router.ServeHTTP(w, req)
 }
 
@@ -92,8 +94,9 @@ func filter(list []interface{}, f func(interface{}) bool) []interface{} {
 	return result
 }
 
-func NewJsonRouter() *JsonRouter {
-	router := &JsonRouter{}
+// NewJSONRouter returns a new router instance.
+func NewJSONRouter() *JSONRouter {
+	router := &JSONRouter{}
 	router.Router = mux.NewRouter()
 	return router
 }

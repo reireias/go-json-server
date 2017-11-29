@@ -8,7 +8,7 @@ import (
 )
 
 func TestListPath(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -33,7 +33,7 @@ func TestListPath(t *testing.T) {
 }
 
 func TestIDPath(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -58,7 +58,7 @@ func TestIDPath(t *testing.T) {
 }
 
 func TestIDPathNotFound(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -83,7 +83,7 @@ func TestIDPathNotFound(t *testing.T) {
 }
 
 func TestFilterString(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -108,7 +108,7 @@ func TestFilterString(t *testing.T) {
 }
 
 func TestFilterStringNoRecord(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -133,7 +133,7 @@ func TestFilterStringNoRecord(t *testing.T) {
 }
 
 func TestFilterNumber(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -158,7 +158,7 @@ func TestFilterNumber(t *testing.T) {
 }
 
 func TestFilterNumberInvalid(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
@@ -183,7 +183,7 @@ func TestFilterNumberInvalid(t *testing.T) {
 }
 
 func TestFilterNotExistsKey(t *testing.T) {
-	jsonRouter := NewJsonRouter()
+	jsonRouter := NewJSONRouter()
 	jsonRouter.Add("/test", "./test.json")
 
 	ts := httptest.NewServer(jsonRouter)
