@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/reireias/go-json-server.svg?branch=master)](https://travis-ci.org/reireias/go-json-server)
+[![Build Status](https://travis-ci.org/reireias/jserver.svg?branch=master)](https://travis-ci.org/reireias/jserver)
 
-# go-json-server
+# jserver
 Simple http server that returns data from json file.
