@@ -1,9 +1,11 @@
 [{
   "id": "1",
   "age": 14,
-  "name": "kaban"
+  "name": "kaban",
+  "height": 150.5
 }, {
   "id": "2",
   "age": 15,
-  "name": "serval"
+  "name": "serval",
+  "height": 160.3
 }]
